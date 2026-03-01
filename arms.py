@@ -100,24 +100,15 @@ unicode_blocks = load_blocks()
 homoglyph_dict = load_chars()
 math_homoglyph_dict = load_math_chars()
 
-
-  
-
-
-
-
 def whitespace_perturbation(input_text, indices):
-  """
-  input_text = original question
-  pertubs all possible locations for whitespaces
+    """
+    input_text = original question
+    pertubs all possible locations for whitespaces
 
-  """
-  
-  indices_perturbed = []
-  perturbed_question = ""
-
-  for char in input_text:
-   for char in input_text:
+    """
+    indices_perturbed = []
+    perturbed_question = ""
+    for char in input_text:
             # perturb whitespaces
             if char == " " or char == "\t":
                 perturbed_question += whitespaces[random.randint(0, 2)]
@@ -126,7 +117,7 @@ def whitespace_perturbation(input_text, indices):
             else:
                 perturbed_question += char
 
-  return perturbed_question, indices_perturbed
+    return perturbed_question, indices_perturbed
 
 
 def char_block_perturbation(input_text, indices):
