@@ -150,7 +150,7 @@ def char_block_perturbation(input_text, indices):
         random.shuffle(blocks)
 
         replaced = False
-    for block in blocks:
+        for block in blocks:
 
             homoglyphs = block["dict"].get(ch)
             if homoglyphs:
