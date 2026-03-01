@@ -142,7 +142,7 @@ class SequentialUCB:
             print("Perturbed text:", perturbed_text
                   )
             # Calculate cost of THIS perturbation
-            num_changed = len(new_perturbed_indices - perturbed_indices)
+            num_changed = len(new_perturbed_indices) - len(perturbed_indices)
             cost_this_round = num_changed / len(input_text)  # Relative to original
 
             # Check if this would exceed budget
