@@ -106,7 +106,7 @@ math_homoglyph_dict = load_math_chars()
 
 
 
-def whitespace_perturbation(input_text):
+def whitespace_perturbation(input_text, indices):
   """
   input_text = original question
   pertubs all possible locations for whitespaces
