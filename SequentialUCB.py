@@ -119,7 +119,7 @@ class SequentialUCB:
         total_cost = 0
         strategies_used = []
 
-        perturbed_indices =set()
+        perturbed_indices =[]
 
         for round_num in range(max_rounds):
             # Check if already fooled
