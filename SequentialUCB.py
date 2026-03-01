@@ -100,7 +100,7 @@ class SequentialUCB:
         return 1 if fooled else 0
 
 
-    def attack_sequential(self, input_text, model, ground_truth, max_rounds=10):
+    def attack_sequential(self, input_text, ground_truth, max_rounds=10):
         """
         Apply strategies sequentially until model is fooled or budget exhausted
 
@@ -131,6 +131,9 @@ class SequentialUCB:
                 break
 
             self.time_step += 1
+            print("round: ", round_num, "\n")
+            print("UCB values:", {i: self.compute_ucb(i) for i in range(self.n_arms)}, "\n")
+            print("Pull counts:", dict(self.T), "\n")
 
             # Select next strategy using UCB
             selected_arm = self.select_strategy()
@@ -138,9 +141,8 @@ class SequentialUCB:
             # Apply the strategy to CURRENT state
             perturbed_text, new_perturbed_indices = self.strategies[selected_arm](current_text, perturbed_indices)
 
-            print("Applied strategy:", self.strategies[selected_arm].__name__)
-            print("Perturbed text:", perturbed_text
-                  )
+            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
+            print("Perturbed text:", perturbed_text, "\n")
             # Calculate cost of THIS perturbation
             num_changed = len(new_perturbed_indices) - len(perturbed_indices)
             cost_this_round = num_changed / len(input_text)  # Relative to original
