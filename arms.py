@@ -139,12 +139,11 @@ def char_block_perturbation(input_text, indices):
     perturbed_question = ""
     indices_perturbed= []
 
-    blocks_used = set()
 
     for ch in input_text:
-        if (input_text.index(ch) in indices):
-            perturbed_question += ch      
-            continue                            #skips the ch if already perturbed
+        # if (input_text.index(ch) in indices):
+        #     perturbed_question += ch      
+        #     continue                           #skips the ch if already perturbed
 
         blocks= unicode_blocks.copy()
         random.shuffle(blocks)

@@ -4,7 +4,7 @@ import numpy as np
 import ollama
 
 class SequentialUCB:
-    def __init__(self, strategies, budget=0.3, lambda_value=0.5, alpha=3.0):
+    def __init__(self, strategies, budget=1.0, lambda_value=0.5, alpha=3.0):
         self.strategies = strategies
         self.n_arms = len(strategies)
         self.budget = budget
@@ -147,6 +147,8 @@ class SequentialUCB:
             num_changed = len(new_perturbed_indices) - len(perturbed_indices)
             cost_this_round = num_changed / len(input_text)  # Relative to original
 
+            perturbed_indices= new_perturbed_indices        #updating perturbed indices for next round
+            
             # Check if this would exceed budget
             if total_cost + cost_this_round > self.budget:
                 # Try different strategy
