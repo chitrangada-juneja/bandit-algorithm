@@ -123,7 +123,7 @@ class SequentialUCB:
 
         for round_num in range(max_rounds):
             # Check if already fooled
-            if model(current_text) != ground_truth:
+            if self.model_result(current_text, ground_truth) == 1:
                 return True, current_text, strategies_used
 
             # Check budget
