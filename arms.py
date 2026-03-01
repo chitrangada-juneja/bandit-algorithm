@@ -8,9 +8,9 @@ import random
 import ast
 
 # load all the txt files 
-chars_blocks_file = " "    #name of chars_blocks file
-random_chars_file = " "    # name of random_chars file
-math_only_file = " "       # name of math symbols homoglyphs file  
+chars_blocks_file = "sorted_most_effective_blocks.txt"    #name of chars_blocks file
+random_chars_file = "chars.txt"    # name of random_chars file
+math_only_file = "chars.txt"       # name of math symbols homoglyphs file  
 
 def load_blocks():
 
@@ -54,17 +54,17 @@ def load_chars(file_name = "chars.txt"):
   # and math only perturbations
 
 
-  homoglyph_dict = {}
-  with open(file_name, "r", encoding = "utf-8") as homoglyphs_file:
-    for line in homoglyphs_file:
-        if line.startswith("#"):
-            continue
-        line = line.strip()
-        # maps each char to a list of all available homoglyphs
-        homoglyph_dict[line[0]] = [homoglyph for homoglyph in line[1:]]    
-  return homoglyph_dict
+    homoglyph_dict = {}
+    with open(file_name, "r", encoding = "utf-8") as homoglyphs_file:
+        for line in homoglyphs_file:
+            if line.startswith("#"):
+                continue
+            line = line.strip()
+             # maps each char to a list of all available homoglyphs
+            homoglyph_dict[line[0]] = [homoglyph for homoglyph in line[1:]]    
+    return homoglyph_dict
 
-def load_math_chars(file_name):
+def load_math_chars(file_name= "chars.txt"):
 
     math_symbols = ["%", "*", "+", "-", "·", "/", "=", "^", "÷", ">", "<", "{", "}", \
                              "(", ")", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!"]
@@ -79,12 +79,13 @@ def load_math_chars(file_name):
             if (line[0] in math_symbols):
                 line = line.strip()
                 math_dict[line[0]] = [homoglyph for homoglyph in line[1:]]      #adds symbols as a list 
-
+    
+    return math_dict
     
 
 # define the similar chars 
 
-most_similar_chars = ""     # file name of visually similar 
+most_similar_chars = "chars_two_most_similar.txt"     # file name of visually similar 
 
 similar_dict = load_chars(most_similar_chars)
 # use this dict when adding delta
