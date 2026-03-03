@@ -4,7 +4,7 @@ import numpy as np
 import ollama
 
 class SequentialUCB:
-    def __init__(self, strategies, budget=1.0, lambda_value=0.5, alpha=3.0):
+    def __init__(self, strategies, budget=5.0, lambda_value=0.5, alpha=3.0):
         self.strategies = strategies
         self.n_arms = len(strategies)
         self.budget = budget
@@ -127,6 +127,7 @@ class SequentialUCB:
 
         for round_num in range(max_rounds):
             # Check if already fooled
+            print("-" * 40)
             if self.model_result(current_text, ground_truth) == 1:
                 return True, current_text, strategies_used
 
@@ -153,13 +154,24 @@ class SequentialUCB:
             # Apply the strategy to CURRENT state
             perturbed_text, new_perturbed_indices = self.strategies[selected_arm](current_text, perturbed_indices)
 
-            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
-            print("Perturbed text:", perturbed_text, "\n")
+           
             # Calculate cost of THIS perturbation
             num_changed = len(new_perturbed_indices)
             cost_this_round = num_changed / len(input_text)  # Relative to original
 
+            self.T[selected_arm] += 1       # Increment pull count for this arm
+
+            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
+            print("Perturbed text:", perturbed_text, "\n")
+            print("Original length:", len(input_text))
+            print("Num changed:", num_changed)
+            print("Cost this round:", cost_this_round)
+            print("Expected cost:", num_changed / len(input_text))
            
+            print("-" * 40)
+
+            
+
             if total_cost + cost_this_round <= self.budget:
                 perturbed_indices.extend(new_perturbed_indices)
             # Check if this would exceed budget
@@ -173,7 +185,7 @@ class SequentialUCB:
             # Update statistics for THIS strategy
             self.utilities[selected_arm].append(utility)
             self.costs[selected_arm].append(cost_this_round)
-            self.T[selected_arm] += 1
+           
 
             # Accept this perturbation
             current_text = perturbed_text
