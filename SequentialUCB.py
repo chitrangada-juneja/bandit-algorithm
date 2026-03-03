@@ -42,6 +42,10 @@ class SequentialUCB:
 
     def select_strategy(self):
         """Select strategy with highest UCB"""
+        for arm in range(self.n_arms):
+            if self.T[arm] == 0:
+                return arm
+
         ucb_values = {arm: self.compute_ucb(arm) for arm in range(self.n_arms)}
         return max(ucb_values, key=ucb_values.get)
 
