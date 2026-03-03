@@ -136,8 +136,16 @@ class SequentialUCB:
 
             self.time_step += 1
             print("round: ", round_num, "\n")
-            print("UCB values:", {i: self.compute_ucb(i) for i in range(self.n_arms)}, "\n")
-            print("Pull counts:", dict(self.T), "\n")
+            
+            print("UCB values:", {
+            self.strategies[i].__name__: val
+            for i, val in {i: self.compute_ucb(i) for i in range(self.n_arms)}.items()
+            }, "\n")
+
+            print("Pull counts:", {
+            self.strategies[i].__name__: count
+            for i, count in self.T.items()
+            })
 
             # Select next strategy using UCB
             selected_arm = self.select_strategy()
