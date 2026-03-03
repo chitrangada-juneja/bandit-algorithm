@@ -106,18 +106,22 @@ def whitespace_perturbation(input_text, indices):
     pertubs all possible locations for whitespaces
 
     """
-    indices_perturbed = []
+    new_indices = []
     perturbed_question = ""
-    for char in input_text:
+    for i, ch in enumerate(input_text): 
             # perturb whitespaces
-            if char == " " or char == "\t":
+            if i in indices:
+                perturbed_question += ch      
+                continue                            #skips the ch if already perturbed
+
+            if ch == " ":
                 perturbed_question += whitespaces[random.randint(0, 2)]
-                indices_perturbed += [input_text.index(char)]
+                new_indices.append(i)
             # char is not whitespace
             else:
-                perturbed_question += char
+                perturbed_question += ch
 
-    return perturbed_question, indices_perturbed
+    return perturbed_question, new_indices
 
 
 def char_block_perturbation(input_text, indices):
@@ -137,32 +141,34 @@ def char_block_perturbation(input_text, indices):
     #track of what was used vs what was not 
 
     perturbed_question = ""
-    indices_perturbed= []
+    new_indices = []
 
 
-    for ch in input_text:
+    for i, ch in enumerate(input_text):
         # if (input_text.index(ch) in indices):
         #     perturbed_question += ch      
         #     continue                           #skips the ch if already perturbed
-
+        if i in indices:
+            perturbed_question += ch      
+            continue                            #skips the ch if already perturbed
         blocks= unicode_blocks.copy()
         random.shuffle(blocks)
 
         replaced = False
         for block in blocks:
-
+            
             homoglyphs = block["dict"].get(ch)
             if homoglyphs:
                 perturbed_question += random.choice(homoglyphs)
-                indices_perturbed += [input_text.index(ch)]           
+                new_indices.append(i)          
                 replaced=True
                 break                       #breaks the minute it finds a match
 
-            if not replaced:
-                perturbed_question += ch      #couldnt find perturbation, so we keep it as is
+        if not replaced:
+            perturbed_question += ch      #couldnt find perturbation, so we keep it as is
 
 
-    return perturbed_question, indices_perturbed
+    return perturbed_question, new_indices
 
 def random_chars_perturbation (input_text, indices):
   """
@@ -174,51 +180,68 @@ def random_chars_perturbation (input_text, indices):
   """
  
   perturbed_question = ""
-  indices_perturbed = []
+  new_indices = []
 
-  for ch in input_text:
-    if (input_text.index(ch) in indices):
+  for i, ch in enumerate(input_text):
+    if (i in indices):
         perturbed_question += ch      
         continue                            #skips the ch if already perturbed
 
     # this if condition -> if already perturbed, it can just be added as is
     if ch in homoglyph_dict:
         perturbed_question += random.choice(homoglyph_dict[ch])
-        indices_perturbed += [input_text.index(ch)]
+        new_indices.append(i)
     
     else:
         perturbed_question += ch      #add the char (this case if its already perturbed)
 
-  return perturbed_question, indices_perturbed
+  return perturbed_question, new_indices
 
 def math_perturbation (input_text, indices):
-  """
-  input_text = original question
-  indices = list of all positions already pertubed.
+    """
+    input_text = original question
+    indices = list of all positions already pertubed.
 
-  randomly perturbing math symbols
+    randomly perturbing math symbols
 
-  """
- 
-  perturbed_question = ""
-  indices_perturbed = []
+    """
+    
+    perturbed_question = ""
+    new_indices = []
 
-  for ch in input_text:
-    if (input_text.index(ch) in indices):
-        perturbed_question += ch      
-        continue                            #skips the ch if already perturbed
+    for i, ch in enumerate(input_text):
+        if (i in indices):
+            perturbed_question += ch      
+            continue                            #skips the ch if already perturbed
 
     # this if condition -> if already perturbed, it can just be added as is
-    if ch in math_homoglyph_dict:
-        perturbed_question += random.choice(math_homoglyph_dict[ch])
-        indices_perturbed += [input_text.index(ch)]
+        if ch in math_homoglyph_dict:
+            perturbed_question += random.choice(math_homoglyph_dict[ch])
+            new_indices.append(i)
     
-    else:
-        perturbed_question += ch      #add the char (this case if its already perturbed)
+        else:
+            perturbed_question += ch      #add the char (this case if its already perturbed)
 
-  return perturbed_question, indices_perturbed
+    return perturbed_question, new_indices
+
+def nospace_perturbation(input_text, indices):
+    """
+    input_text = original question
+    pertubs all possible locations for whitespaces
+    indices= list of all positions already perturbed.
+    """
+    nospaces= [chr(0xFEFF), chr(0x200B)]
+    perturbed_question = ""
+    for char in input_text:
+            # perturb whitespaces
+
+            perturbed_question +=nospaces[random.randint(0, 1)]
+            # char is not whitespace
+            perturbed_question += char
 
 
+   
+    
 
 
 

@@ -144,13 +144,14 @@ class SequentialUCB:
             print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
             print("Perturbed text:", perturbed_text, "\n")
             # Calculate cost of THIS perturbation
-            num_changed = len(new_perturbed_indices) - len(perturbed_indices)
+            num_changed = len(new_perturbed_indices)
             cost_this_round = num_changed / len(input_text)  # Relative to original
 
-            perturbed_indices= new_perturbed_indices        #updating perturbed indices for next round
-            
+           
+            if total_cost + cost_this_round <= self.budget:
+                perturbed_indices.extend(new_perturbed_indices)
             # Check if this would exceed budget
-            if total_cost + cost_this_round > self.budget:
+            else:
                 # Try different strategy
                 continue
 
