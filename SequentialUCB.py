@@ -161,14 +161,7 @@ class SequentialUCB:
 
             self.T[selected_arm] += 1       # Increment pull count for this arm
 
-            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
-            print("Perturbed text:", perturbed_text, "\n")
-            print("Original length:", len(input_text))
-            print("Num changed:", num_changed)
-            print("Cost this round:", cost_this_round)
-            print("Expected cost:", num_changed / len(input_text))
-           
-            print("-" * 40)
+            
 
             
 
@@ -192,6 +185,14 @@ class SequentialUCB:
             current_text = perturbed_text
             total_cost += cost_this_round
             strategies_used.append(selected_arm)
+            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
+            print("Perturbed text:", perturbed_text, "\n")
+            print("Original length:", len(input_text))
+            print("Num changed:", num_changed)
+            print("Cost this round:", cost_this_round)
+            print("Expected cost:", num_changed / len(input_text))
+           
+            print("-" * 40)
 
             # Check if fooled
             if utility == 1:
