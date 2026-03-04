@@ -155,7 +155,7 @@ class SequentialUCB:
 
             self.T[selected_arm] += 1       # Increment pull count for this arm
 
-            
+            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
 
             
 
@@ -191,7 +191,7 @@ class SequentialUCB:
             for i, count in self.T.items()
             })
 
-            print("Applied strategy: ", self.strategies[selected_arm].__name__,"\n")
+           
             print("Perturbed text:", perturbed_text, "\n")
             print("Original length:", len(input_text))
             print("Num changed:", num_changed)
