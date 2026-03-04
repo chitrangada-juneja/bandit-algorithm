@@ -13,7 +13,7 @@ arms_list = [
     math_perturbation
 ]
 
-bandit = SequentialUCB(strategies=arms_list, budget=0.3)
+bandit = SequentialUCB(strategies=arms_list, budget=1.0)
 
 success, final_text, used = bandit.attack_sequential(
     input_text="What is 2 + 2?",
