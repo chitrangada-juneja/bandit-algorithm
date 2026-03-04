@@ -211,8 +211,8 @@ class SequentialUCB:
                 return True, current_text, strategies_used
 
         # Attack failed
-        final_success = self.model_result(current_text, ground_truth) == 1
-        return final_success, current_text, strategies_used
+        final_success, prediction = self.model_result(current_text, ground_truth) == 1
+        return final_success,prediction, current_text, strategies_used
 
 
 

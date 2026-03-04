@@ -17,9 +17,10 @@ arms_list = [
 
 bandit = SequentialUCB(strategies=arms_list, budget=1.0)
 
-success, final_text, used = bandit.attack_sequential(
+success, prediction, final_text, used = bandit.attack_sequential(
     input_text="What is 2 + 2?",
     ground_truth="What is 2 + 2?"
 )
 
 print(success)
+print(prediction)
