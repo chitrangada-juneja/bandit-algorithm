@@ -164,6 +164,7 @@ class SequentialUCB:
             # Check if this would exceed budget
             else:
                 # Try different strategy
+                self.costs[selected_arm].append(0)
                 self.utilities[selected_arm].append(0)
                 continue
 
