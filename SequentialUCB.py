@@ -160,10 +160,14 @@ class SequentialUCB:
             
 
             if total_cost + cost_this_round <= self.budget:
+                print("cost total is:", cost_this_round+total_cost)
+                print("budget is:", self.budget)
+
                 perturbed_indices.extend(new_perturbed_indices)
             # Check if this would exceed budget
             else:
                 # Try different strategy
+                print("cost total is:", cost_this_round+total_cost)
                 self.costs[selected_arm].append(0)
                 self.utilities[selected_arm].append(0)
                 continue
