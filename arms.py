@@ -232,13 +232,22 @@ def nospace_perturbation(input_text, indices):
     """
     nospaces= [chr(0xFEFF), chr(0x200B)]
     perturbed_question = ""
-    for char in input_text:
+    new_indices = []
+   
+    for i, ch in enumerate(input_text): 
             # perturb whitespaces
+            if i in indices:
+                perturbed_question += ch      
+                continue                            #skips the ch if already perturbed
 
-            perturbed_question +=nospaces[random.randint(0, 1)]
+            
+            perturbed_question += nospaces[random.randint(0, 1)]
+            perturbed_question += ch      
+            new_indices.append(i)
             # char is not whitespace
-            perturbed_question += char
+           
 
+    return perturbed_question, new_indices
 
    
     

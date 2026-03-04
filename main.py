@@ -1,5 +1,6 @@
 from SequentialUCB import SequentialUCB
 from arms import (
+    nospace_perturbation,
     whitespace_perturbation,
     char_block_perturbation,
     random_chars_perturbation,
@@ -10,7 +11,8 @@ arms_list = [
     whitespace_perturbation,
     char_block_perturbation,
     random_chars_perturbation,
-    math_perturbation
+    math_perturbation, 
+    nospace_perturbation
 ]
 
 bandit = SequentialUCB(strategies=arms_list, budget=1.0)
