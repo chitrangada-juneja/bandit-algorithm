@@ -131,12 +131,20 @@ class SequentialUCB:
         for round_num in range(max_rounds):
             # Check if already fooled
             print("-" * 40)
-            if self.model_result(current_text, ground_truth) == 1:
-                return True, current_text, strategies_used
+            success, _ = self.model_result(current_text, ground_truth)
+            if success == 1:
+                return True,_, current_text, strategies_used
 
             # Check budget
             if total_cost >= self.budget:
-                break
+                print("💰 Budget exhausted — restarting attack state")
+    
+                current_text = input_text
+                total_cost = 0
+                perturbed_indices = []
+                
+                continue
+            
 
             self.time_step += 1
             print("round: ", round_num, "\n")
