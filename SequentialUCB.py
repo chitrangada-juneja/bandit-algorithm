@@ -208,7 +208,7 @@ class SequentialUCB:
             if utility == 1:
                 print("🚨 MODEL FOOLED!")
                 print("Model prediction:", prediction)
-                return True, current_text, strategies_used
+                return True,prediction, current_text, strategies_used
 
         # Attack failed
         final_success, prediction = self.model_result(current_text, ground_truth) == 1
