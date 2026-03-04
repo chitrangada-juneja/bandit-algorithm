@@ -4,7 +4,7 @@ import numpy as np
 import ollama
 
 class SequentialUCB:
-    def __init__(self, strategies, budget=5.0, lambda_value=0.5, alpha=3.0):
+    def __init__(self, strategies, budget=1.0, lambda_value=0.5, alpha=3.0):
         self.strategies = strategies
         self.n_arms = len(strategies)
         self.budget = budget
