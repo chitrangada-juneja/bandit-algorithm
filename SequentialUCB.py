@@ -104,10 +104,10 @@ class SequentialUCB:
         judge_verdict = judge_response["message"]["content"].strip().lower()
         fooled = "yes" in judge_verdict
         
-        return 1 if fooled else 0
+        return (1 if fooled else 0),prediction
 
 
-    def attack_sequential(self, input_text, ground_truth, max_rounds=10):
+    def attack_sequential(self, input_text, ground_truth, max_rounds=20):
         """
         Apply strategies sequentially until model is fooled or budget exhausted
 
@@ -173,7 +173,7 @@ class SequentialUCB:
                 continue
 
             # Evaluate result
-            utility = self.model_result(perturbed_text, ground_truth)
+            utility, prediction = self.model_result(perturbed_text, ground_truth)
 
             # Update statistics for THIS strategy
             self.utilities[selected_arm].append(utility)
@@ -206,6 +206,8 @@ class SequentialUCB:
 
             # Check if fooled
             if utility == 1:
+                print("🚨 MODEL FOOLED!")
+                print("Model prediction:", prediction)
                 return True, current_text, strategies_used
 
         # Attack failed
